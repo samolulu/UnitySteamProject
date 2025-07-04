@@ -59,7 +59,7 @@
     <!-- 2. 保留特定方法及其参数 -->
     <!-- <assembly fullname="Assembly-CSharp">
         <type fullname="MyProject.MyReflectionClass">
-            <method name="InvokeMethod" parameters="1" /> <!-- 保留带1个参数的InvokeMethod -->
+            <method name="InvokeMethod" parameters="1" /> 
         </type>
-    </assembly> -->
+    </assembly>  -->
 </linker>

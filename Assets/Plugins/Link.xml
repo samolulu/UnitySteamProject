@@ -1,0 +1,65 @@
+<linker>
+	<!-- Link.xml是一个关键配置文件，用于告诉 IL2CPP 哪些代码需要在 AOT（ Ahead-of-Time）编译过程中保留，
+	避免被代码裁剪工具（IL2CPP 内置的 Linker）误删。这对于解决反射、动态类型加载等场景下的运行时错误至关重要。 -->
+    <!-- ============================== -->
+    <!-- 全局配置：保留常用系统程序集 -->
+    <!-- ============================== -->
+    <!-- <assembly fullname="System" preserve="all" />
+    <assembly fullname="System.Core" preserve="all" />
+    <assembly fullname="System.Runtime" preserve="all" />
+    <assembly fullname="System.Text.Json" preserve="all" /> -->
+    
+    <!-- ============================== -->
+    <!-- 第三方库配置 -->
+    <!-- ============================== -->
+    
+    <!-- 1. MiniExcel (Excel处理库) -->
+    <!-- <assembly fullname="MiniExcel" preserve="all" /> -->
+    
+    <!-- 2. Newtonsoft.Json (JSON序列化) -->
+    <!-- <assembly fullname="Newtonsoft.Json">
+        <type fullname="Newtonsoft.Json.JsonConvert" preserve="all" />
+        <type fullname="Newtonsoft.Json.Linq.JObject" preserve="all" />
+        <type fullname="Newtonsoft.Json.Linq.JArray" preserve="all" />
+    </assembly> -->
+ 
+    <!-- ============================== -->
+    <!-- 项目自定义配置 -->
+    <!-- ============================== -->
+    
+    <!-- 1. 保留项目中的所有自定义命名空间 -->
+    <!-- <assembly fullname="Assembly-CSharp"> -->
+        <!-- <type fullname="MyProject.*" preserve="all" /> -->
+        
+        <!-- 保留特定类型 -->
+        <!-- <type fullname="MyProject.MyManagerClass" preserve="all" /> -->
+        
+        <!-- 保留泛型类型 -->
+        <!-- <type fullname="System.Collections.Generic.List`1" preserve="all" />
+        <type fullname="System.Collections.Generic.Dictionary`2" preserve="all" /> -->
+    <!-- </assembly> -->
+    
+    <!-- 2. 保留Unity特定类型 -->
+    <!-- <assembly fullname="UnityEngine">
+        <type fullname="UnityEngine.TextAsset" preserve="all" />
+        <type fullname="UnityEngine.ScriptableObject" preserve="all" />
+    </assembly> -->
+    
+    <!-- ============================== -->
+    <!-- 高级配置示例 -->
+    <!-- ============================== -->
+    
+    <!-- 1. 保留接口及其所有实现类 -->
+    <!-- <assembly fullname="Assembly-CSharp">
+        <type fullname="MyProject.IMyInterface" preserve="all" />
+        <type fullname="MyProject.MyInterfaceImpl1" preserve="all" />
+        <type fullname="MyProject.MyInterfaceImpl2" preserve="all" />
+    </assembly> -->
+    
+    <!-- 2. 保留特定方法及其参数 -->
+    <!-- <assembly fullname="Assembly-CSharp">
+        <type fullname="MyProject.MyReflectionClass">
+            <method name="InvokeMethod" parameters="1" /> <!-- 保留带1个参数的InvokeMethod -->
+        </type>
+    </assembly> -->
+</linker>

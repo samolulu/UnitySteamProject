@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.cysharp.zlogger": {
+      "version": "https://github.com/Cysharp/ZLogger.git?path=src/ZLogger.Unity/Assets/ZLogger.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "d44952429779c79eb0fdcc675a1224003bbf7172"
+    },
     "com.ta.foldercommenttool": {
       "version": "https://github.com/fenglyu1314/FolderCommentTool.git#upm",
       "depth": 0,

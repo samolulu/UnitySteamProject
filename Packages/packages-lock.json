@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.ta.foldercommenttool": {
+      "version": "https://github.com/fenglyu1314/FolderCommentTool.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "23da8dccb5603e916d99371d02ca9c61a3769a31"
+    },
     "com.unity.ai.navigation": {
       "version": "1.1.7",
       "depth": 0,

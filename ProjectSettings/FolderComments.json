@@ -1,0 +1,602 @@
+{
+    "comments": [
+        {
+            "guid": "49ae1f2a85f7c1745a519bb44e70e3ef",
+            "title": "美术资源",
+            "comment": "美术资源管理思路：先按功能划分，各功能下管理自己的各类资源。\t分布在各功能下的：模型、纹理贴图、材质、预制体、动画\r\n按类型管理的：字体、shader",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751855969356,
+            "modifiedTimeStamp": 1751858438927
+        },
+        {
+            "guid": "d5e267c1abaceef47906f0695631cef0",
+            "title": "<b>框架核心</b>",
+            "comment": "与游戏内容无法的，稳定后不常改的，运行时和编辑器模式都可能用到；渲染、动画、音效、视频、输入、对象池、序列化、本地化、反作弊、多线程、网络；",
+            "titleColor": {
+                "r": 0.1571875512599945,
+                "g": 0.3735848069190979,
+                "b": 0.19113221764564515,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856041842,
+            "modifiedTimeStamp": 1751860644964
+        },
+        {
+            "guid": "979a798131d03ea47bf19d40356e86d8",
+            "title": "编辑器内容",
+            "comment": "自定义的编辑器拓展和内容在这里集中管理",
+            "titleColor": {
+                "r": 0.1568627506494522,
+                "g": 0.37254902720451357,
+                "b": 0.1921568661928177,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856288369,
+            "modifiedTimeStamp": 1751860667724
+        },
+        {
+            "guid": "212aa8f44757b3e448db4972211417fd",
+            "title": "游戏资源",
+            "comment": "包括美术资源、音效、代码、策划配置等游戏资产。",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.0,
+                "b": 0.6328220367431641,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856338233,
+            "modifiedTimeStamp": 1751861099155
+        },
+        {
+            "guid": "9c53962885c2c4f449125a979d6ad240",
+            "title": "unity 场景",
+            "comment": "方便组织打包",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856386865,
+            "modifiedTimeStamp": 1751857019520
+        },
+        {
+            "guid": "709f11a7f3c4041caa4ef136ea32d874",
+            "title": "全局配置",
+            "comment": "",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856420019,
+            "modifiedTimeStamp": 1751857009088
+        },
+        {
+            "guid": "317d178db65c21e42b326423e8a92576",
+            "title": "插件",
+            "comment": "把不常更改的放在这里，利于优化编译速度",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856510408,
+            "modifiedTimeStamp": 1751856994808
+        },
+        {
+            "guid": "5ad839a0f535e0a4da20d000a56392de",
+            "title": "插件",
+            "comment": "平台特定原生代码和插件，提前编译，会被全部打包（包括Editor相关）,平台无关的插件移入Standard Assets",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856552728,
+            "modifiedTimeStamp": 1751857028033
+        },
+        {
+            "guid": "41a49f217bb9c1047872665f352445a4",
+            "title": "流资源",
+            "comment": "运行时通过路径访问",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751856965752,
+            "modifiedTimeStamp": 1751856980761
+        },
+        {
+            "guid": "3f0528ec009e58e4d8d7e62c4b420cff",
+            "title": "插件",
+            "comment": "默认第三方插件，稳定后移入Standard Assets",
+            "titleColor": {
+                "r": 0.0,
+                "g": 0.0,
+                "b": 0.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857054152,
+            "modifiedTimeStamp": 1751857054152
+        },
+        {
+            "guid": "21696a010cbf72b438172339255db492",
+            "title": "本地测试",
+            "comment": "不加入版本管理的测试内容",
+            "titleColor": {
+                "r": 0.1018868088722229,
+                "g": 0.1018868088722229,
+                "b": 0.1018868088722229,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857112696,
+            "modifiedTimeStamp": 1751857112696
+        },
+        {
+            "guid": "cec75224b9098e84a92b0312922fd5b6",
+            "title": "编辑器拓展",
+            "comment": "MenuItem\\EditorWindow\\Inspector 等编辑器拓展",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857406783,
+            "modifiedTimeStamp": 1751857421697
+        },
+        {
+            "guid": "ec8be97c859d4e94aa628ec8882b4307",
+            "title": "游戏编辑器",
+            "comment": "任务编辑器、技能编辑器 之类",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857455856,
+            "modifiedTimeStamp": 1751857455856
+        },
+        {
+            "guid": "dbf134857daf7df428aa31cdd055514f",
+            "title": "NuGet Manager",
+            "comment": "特殊插件，用于下载管理 Unity NuGet package",
+            "titleColor": {
+                "r": 0.11698108911514282,
+                "g": 0.11698108911514282,
+                "b": 0.11698108911514282,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857495815,
+            "modifiedTimeStamp": 1751857595200
+        },
+        {
+            "guid": "e4102196389c9eb45a94f31c0769ae9f",
+            "title": "开发工具",
+            "comment": "自动化等开发工具：Build\\Excel\\AssetImport 纹理处理、资源导入、配置处理、脚本模板生成",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857525296,
+            "modifiedTimeStamp": 1751857525296
+        },
+        {
+            "guid": "863f8e39f4f0db249b52a8e30d0ac7ae",
+            "title": "打包工具",
+            "comment": "资源打包、自动化打包",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751857642336,
+            "modifiedTimeStamp": 1751857642336
+        },
+        {
+            "guid": "805a190fe6ab145448801463f0fc74c4",
+            "title": "角色资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858483165,
+            "modifiedTimeStamp": 1751858483165
+        },
+        {
+            "guid": "37284623bf0b33c4eaa170b013f8223b",
+            "title": "通用共享资源",
+            "comment": "一些多个功能可能共用的资源",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858491742,
+            "modifiedTimeStamp": 1751858564159
+        },
+        {
+            "guid": "8836f9cc839ee934f980babfcd86def3",
+            "title": "特效",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858503789,
+            "modifiedTimeStamp": 1751858503789
+        },
+        {
+            "guid": "cf3acc60a87dcc94a86f112cd568e613",
+            "title": "场景环境",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858518998,
+            "modifiedTimeStamp": 1751858518998
+        },
+        {
+            "guid": "f64cc969a99ecf64a95eb369b69af13f",
+            "title": "界面相关",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858533447,
+            "modifiedTimeStamp": 1751858533447
+        },
+        {
+            "guid": "43d924de41bb1b848be8909b74be6fc4",
+            "title": "声音资源",
+            "comment": "音乐、UI音效、环境音效、语音等资源",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858835310,
+            "modifiedTimeStamp": 1751858835310
+        },
+        {
+            "guid": "6525d0fcb0d47b24b82068182a1a0c38",
+            "title": "策划配置",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858856053,
+            "modifiedTimeStamp": 1751858856053
+        },
+        {
+            "guid": "0d80cd6b43e9bee4eacbe7669d8de665",
+            "title": "游戏脚本",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751858933830,
+            "modifiedTimeStamp": 1751858933830
+        },
+        {
+            "guid": "0375fc7c02abc6f4eb4a26c472e7dd9c",
+            "title": "游戏框架代码",
+            "comment": "辅助于游戏玩法内容的管理器、集成系统、框架拓展、工具类库、平台支持",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859001501,
+            "modifiedTimeStamp": 1751868197201
+        },
+        {
+            "guid": "c87b1471348af994fbbc41170fac6ff4",
+            "title": "游戏玩法模块",
+            "comment": "游戏玩法代码，按游戏功能模块分布",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859020654,
+            "modifiedTimeStamp": 1751859860924
+        },
+        {
+            "guid": "e3e2739a4fbde2d49bfac47ac64eb6e7",
+            "title": "游戏界面脚本",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859040213,
+            "modifiedTimeStamp": 1751859870293
+        },
+        {
+            "guid": "87b9934776587e14494c152ec89f261d",
+            "title": "框架和引擎拓展",
+            "comment": "attrubute\\unity组件拓展等",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859068453,
+            "modifiedTimeStamp": 1751859068453
+        },
+        {
+            "guid": "5a1f030796d2d1049bb1e07c4e981b5d",
+            "title": "管理器",
+            "comment": "状态管理、生命周期管理、资源管理、性能管理",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859083365,
+            "modifiedTimeStamp": 1751859083365
+        },
+        {
+            "guid": "6f0e36c27c0e8af45922fb7e6b2bd00c",
+            "title": "集成系统",
+            "comment": "服务于游戏的：数据、存档、界面、事件、寻路、红点、镜头、动画等",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859112509,
+            "modifiedTimeStamp": 1751859112509
+        },
+        {
+            "guid": "b1bebf501dd9b054eb07ced5cd2b0c46",
+            "title": "平台相关",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859145846,
+            "modifiedTimeStamp": 1751859145846
+        },
+        {
+            "guid": "4c806cd071f26a649927da30be609117",
+            "title": "通用工具类库",
+            "comment": "Util\\算法库、数学库、文本库之类",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859208694,
+            "modifiedTimeStamp": 1751859208694
+        },
+        {
+            "guid": "b004d3c1e9217f6498a2ce57d80c0b1b",
+            "title": "引导模块",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859256286,
+            "modifiedTimeStamp": 1751859801956
+        },
+        {
+            "guid": "e21e4db97f4d8bc40aebd1b63fcab7f4",
+            "title": "玩家模块",
+            "comment": "数据和逻辑",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859285029,
+            "modifiedTimeStamp": 1751859819181
+        },
+        {
+            "guid": "a011e1a7fbe8c554aa70bd7bad0c86a1",
+            "title": "UI拓展代码",
+            "comment": "UI组件、效果等拓展",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859336114,
+            "modifiedTimeStamp": 1751859385877
+        },
+        {
+            "guid": "66bd08450415a3e4790b5adf20cfba5c",
+            "title": "UI界面脚本",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859358717,
+            "modifiedTimeStamp": 1751859358717
+        },
+        {
+            "guid": "627a661fb17076246808c9a8b1342317",
+            "title": "通用UI界面代码",
+            "comment": "提示框、浮窗、之类的",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859485191,
+            "modifiedTimeStamp": 1751859485191
+        },
+        {
+            "guid": "590599fdab2347144a3f0481a6a91ddb",
+            "title": "共享模块",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859543861,
+            "modifiedTimeStamp": 1751859543861
+        },
+        {
+            "guid": "f1ee3e81a4b83be4cae3ff41079e17b8",
+            "title": "场景模块",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859830428,
+            "modifiedTimeStamp": 1751859830428
+        },
+        {
+            "guid": "088f44cfc62fda64a8cc4d3740c5727c",
+            "title": "任务模块",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859837253,
+            "modifiedTimeStamp": 1751859837253
+        },
+        {
+            "guid": "045c758cea002f644bf96f4ca12a7bd1",
+            "title": "角色模块",
+            "comment": "NPC等",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751859891948,
+            "modifiedTimeStamp": 1751859891948
+        },
+        {
+            "guid": "3fb49cd3e10dc3544b28867973b63c9a",
+            "title": "不要放这里",
+            "comment": "",
+            "titleColor": {
+                "r": 1.0,
+                "g": 0.43369871377944949,
+                "b": 0.42075467109680178,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751860458474,
+            "modifiedTimeStamp": 1751868894462
+        },
+        {
+            "guid": "e19dab9e6e4f5624995d45a23e4dc47c",
+            "title": "环境音效",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751860553116,
+            "modifiedTimeStamp": 1751860553116
+        },
+        {
+            "guid": "f68da88a07fcc3b488aa8e91ad661f8f",
+            "title": "UI音效",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751860561939,
+            "modifiedTimeStamp": 1751860561939
+        },
+        {
+            "guid": "5703edac4a70b0944813ce69b253b762",
+            "title": "UI通用资源",
+            "comment": "动画、图标等",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751861435202,
+            "modifiedTimeStamp": 1751861435202
+        },
+        {
+            "guid": "e7ace838cac43bc4db230e4ef2d4053b",
+            "title": "UI界面资源",
+            "comment": "按界面分类管理",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1751861476033,
+            "modifiedTimeStamp": 1751861476033
+        }
+    ]
+}

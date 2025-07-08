@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.cysharp.csprojmodifier": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier",
     "com.cysharp.zlogger": "https://github.com/Cysharp/ZLogger.git?path=src/ZLogger.Unity/Assets/ZLogger.Unity",
     "com.ta.foldercommenttool": "https://github.com/fenglyu1314/FolderCommentTool.git#upm",
     "com.unity.ai.navigation": "1.1.7",

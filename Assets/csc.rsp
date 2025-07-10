@@ -1,6 +1,3 @@
 -langVersion:preview -nullable 
--nowarn:8600
--nowarn:8601
--nowarn:8603
--nowarn:8618
--nowarn:8625
+-nowarn:8600,8601,8602,8603,8604,8605,8607,8618,8619,8625,8629,8634
+ 

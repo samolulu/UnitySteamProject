@@ -4,6 +4,7 @@ using UnityEngine;
 using Microsoft.Extensions.Logging;
 using ZLogger;
 using ZLogger.Unity;
+using ZLogger.Providers;
 
 /// <summary>
 /// 日志输出到控制台和文件的管理
@@ -50,6 +51,20 @@ public class LoggerManager : MonoBehaviour
 		InitializeLogging();
 	}
 
+	/// <summary>
+	/// 滚动文件检查
+	/// </summary>
+	/// <param name="path"></param>
+	/// <returns></returns>
+	string RollingFile(string path)
+	{
+		if (string.IsNullOrWhiteSpace(path)) return path;
+		string roll = path.Replace(".log", "_prev.log"); 
+		if (File.Exists(roll)) File.Delete(roll);;
+		if (File.Exists(path)) File.Move(path, roll);
+		return path;
+	}
+
 	void InitializeLogging()
 	{
 		// 创建全局控制台日志工厂
@@ -74,15 +89,22 @@ public class LoggerManager : MonoBehaviour
 
 
 		// 创建文件输出日志工厂
+#if UNITY_EDITOR
+		string logDirectory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "Logs/Player");	
+#else
 		string logDirectory = Path.Combine(Application.persistentDataPath, "Logs");
+#endif
+		
 		if (Directory.Exists(logDirectory) == false) Directory.CreateDirectory(logDirectory);
-		string path_info = Path.Combine(logDirectory, "Info.log");
-		string path_warning = Path.Combine(logDirectory, "Warning.log");
-		string path_error = Path.Combine(logDirectory, "Error.log");
-
+		string path_info = RollingFile(Path.Combine(logDirectory, "Info.log"));
+		string path_warning = RollingFile(Path.Combine(logDirectory, "Warning.log"));
+		string path_error = RollingFile(Path.Combine(logDirectory, "Error.log"));
+ 
+		
 		//配置ZLoggerFileOptions
-		Action<ZLogger.Providers.ZLoggerFileOptions> configure = options =>
+		Action<ZLoggerFileOptions> configure = options =>
 		{
+			options.FileShared = false;
 			//options.FullMode = BackgroundBufferFullMode.Grow;
 			options.UsePlainTextFormatter(formatter =>
 			{
@@ -94,7 +116,7 @@ public class LoggerManager : MonoBehaviour
 			});
 
 		};
-
+      
 		_loggerFactory_file_info = LoggerFactory.Create(builder =>
 		{
 			builder.ClearProviders().AddFilter(null, (LogLevel level) => { return level <= LogLevel.Information; }).AddZLoggerFile(path_info, configure);

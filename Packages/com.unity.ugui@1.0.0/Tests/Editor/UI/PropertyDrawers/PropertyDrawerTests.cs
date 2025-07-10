@@ -8,7 +8,6 @@ using UnityEngine.TestTools;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using UnityEngine.Search;
-using UnityEngine;
 
 public class PropertyDrawerTests
 {

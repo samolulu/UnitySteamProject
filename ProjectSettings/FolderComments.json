@@ -16,7 +16,7 @@
         {
             "guid": "d5e267c1abaceef47906f0695631cef0",
             "title": "<b>框架核心</b>",
-            "comment": "与游戏内容无法的，稳定后不常改的，运行时和编辑器模式都可能用到；渲染、动画、音效、视频、输入、对象池、序列化、本地化、反作弊、多线程、网络；",
+            "comment": "与游戏内容无法的，稳定后不常改的，运行时和编辑器模式都可能用到；渲染、动画、音效、视频、输入、对象池、序列化、本地化、反作弊、多线程、网络、引擎扩展、其他工具类；",
             "titleColor": {
                 "r": 0.1571875512599945,
                 "g": 0.3735848069190979,
@@ -24,7 +24,7 @@
                 "a": 1.0
             },
             "createdTimeStamp": 1751856041842,
-            "modifiedTimeStamp": 1751860644964
+            "modifiedTimeStamp": 1752199820986
         },
         {
             "guid": "979a798131d03ea47bf19d40356e86d8",
@@ -315,7 +315,7 @@
         {
             "guid": "0375fc7c02abc6f4eb4a26c472e7dd9c",
             "title": "游戏框架代码",
-            "comment": "辅助于游戏玩法内容的管理器、集成系统、框架拓展、工具类库、平台支持",
+            "comment": "辅助于游戏玩法内容的管理器、集成系统、框架拓展、游戏工具集、平台支持",
             "titleColor": {
                 "r": 0.4000000059604645,
                 "g": 0.800000011920929,
@@ -323,7 +323,7 @@
                 "a": 1.0
             },
             "createdTimeStamp": 1751859001501,
-            "modifiedTimeStamp": 1751868197201
+            "modifiedTimeStamp": 1752224031587
         },
         {
             "guid": "c87b1471348af994fbbc41170fac6ff4",
@@ -354,7 +354,7 @@
         {
             "guid": "87b9934776587e14494c152ec89f261d",
             "title": "框架和引擎拓展",
-            "comment": "attrubute\\unity组件拓展等",
+            "comment": "c#对象和unity组件拓展等",
             "titleColor": {
                 "r": 0.4000000059604645,
                 "g": 0.800000011920929,
@@ -362,7 +362,7 @@
                 "a": 1.0
             },
             "createdTimeStamp": 1751859068453,
-            "modifiedTimeStamp": 1751859068453
+            "modifiedTimeStamp": 1752228642521
         },
         {
             "guid": "5a1f030796d2d1049bb1e07c4e981b5d",
@@ -406,7 +406,7 @@
         {
             "guid": "4c806cd071f26a649927da30be609117",
             "title": "通用工具类库",
-            "comment": "Util\\算法库、数学库、文本库之类",
+            "comment": "不依赖玩法的：算法库、数学库、文本库、IO、等通用函数库",
             "titleColor": {
                 "r": 0.4000000059604645,
                 "g": 0.800000011920929,
@@ -414,7 +414,7 @@
                 "a": 1.0
             },
             "createdTimeStamp": 1751859208694,
-            "modifiedTimeStamp": 1751859208694
+            "modifiedTimeStamp": 1752206285326
         },
         {
             "guid": "b004d3c1e9217f6498a2ce57d80c0b1b",
@@ -597,6 +597,58 @@
             },
             "createdTimeStamp": 1751861476033,
             "modifiedTimeStamp": 1751861476033
+        },
+        {
+            "guid": "22832985607d3d94dadfce913be4e5bd",
+            "title": "持久化管理",
+            "comment": "持久化、序列化",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1752206338302,
+            "modifiedTimeStamp": 1752206338302
+        },
+        {
+            "guid": "5dd96c3feafc5434f98554fb2be51b6f",
+            "title": "日志管理",
+            "comment": "控制台和日志文件管理",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1752206364182,
+            "modifiedTimeStamp": 1752206364182
+        },
+        {
+            "guid": "ba6136c830658b7408be2521a96ca1bd",
+            "title": "游戏集成工具集",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1752223772667,
+            "modifiedTimeStamp": 1752223806182
+        },
+        {
+            "guid": "a1338cfe3ef62f94eb1771082d47c1a3",
+            "title": "自定义特性",
+            "comment": "自定义attrubute",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1752228663977,
+            "modifiedTimeStamp": 1752228699201
         }
     ]
 }

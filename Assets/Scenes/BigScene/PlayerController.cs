@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 		transform.position += inputDir * moveSpeed * Time.deltaTime;
 
 		
-		transform.forward = Vector3.Lerp(transform.forward, inputDir, 0.1f);
+		//transform.forward = Vector3.Lerp(transform.forward, inputDir, 0.1f);
     }
 
  

@@ -115,13 +115,14 @@ public class CameraFollow : MonoBehaviour
             float zoomFactor = 1 - logFactor;
             
             // 4. 添加近距离额外乘数，增强近距离的缩放速度
-            if (normalizedDistance < 0.3f) // 近距离阈值
+            if (currentDistance < minDistance + 5.0f) // 近距离阈值
             {
                 zoomFactor *= closeRangeMultiplier;
             }
-            
+			zoomFactor = Mathf.Max(zoomFactor, 0.03f);
+			
             // 应用缩放
-            float zoomAmount = scrollInput * zoomIntensity * zoomFactor * currentDistance;
+			float zoomAmount = scrollInput * zoomIntensity * zoomFactor * currentDistance;
             targetDistance -= zoomAmount;
             
             // 限制距离范围

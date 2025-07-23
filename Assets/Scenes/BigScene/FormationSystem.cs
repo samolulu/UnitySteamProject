@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class FormationSystem : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class FormationSystem : MonoBehaviour
     void Update()
     {
         // 判断主角是否在移动（通过速度参数）
-        isPlayerMoving = playerAnimator.GetFloat(playerSpeedParam) > 0.1f;
+        isPlayerMoving = Math.Abs(playerAnimator.GetFloat(playerSpeedParam)) > 0.02f;
         
         if(Time.frameCount % 5 == 0)UpdateFormationPositions();
         SyncNPCStates();

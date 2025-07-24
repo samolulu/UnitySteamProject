@@ -31,42 +31,45 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    void Attack()
-    {
-        // 播放攻击动画
-        if (animator != null)
-            animator.SetTrigger("Attack");
+	int attackId = 0;
+	void Attack()
+	{
+		// 播放攻击动画
+		if (animator != null)
+			animator.SetTrigger(attackId %3 ==0 ? "Attack_B" :"Attack");
 
-        // 播放攻击音效
-        if (attackSound != null)
-            attackSound.Play();
+		// 播放攻击音效
+		if (attackSound != null)
+			attackSound.Play();
 
-        // 播放攻击特效
-        if (attackEffect != null)
-            attackEffect.Play();
+		// 播放攻击特效
+		if (attackEffect != null)
+			attackEffect.Play();
 
-        // 检测攻击范围内的敌人
-        Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
+		// 检测攻击范围内的敌人
+		Collider[] hitEnemies = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
 
-        foreach (Collider enemy in hitEnemies)
-        {
-            // 计算攻击方向
-            Vector3 direction = enemy.transform.position - transform.position;
-            direction.y = 0; // 忽略Y轴高度差
+		foreach (Collider enemy in hitEnemies)
+		{
+			// 计算攻击方向
+			Vector3 direction = enemy.transform.position - transform.position;
+			direction.y = 0; // 忽略Y轴高度差
 
-            // 确保敌人在前方扇形范围内（120度）
-            if (Vector3.Angle(transform.forward, direction) < 60f)
-            {
-                // 调用敌人的受伤方法
-                EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
-                if (enemyHealth != null)
-                {
-					this.DelayDoSomething(0.3f, () => { enemyHealth.TakeDamage(attackDamage); });
-                    
-                }
-            }
-        }
-    }
+			// 确保敌人在前方扇形范围内（120度）
+			if (Vector3.Angle(transform.forward, direction) < 60f)
+			{
+				// 调用敌人的受伤方法
+				EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();
+				if (enemyHealth != null)
+				{
+					this.DelayDoSomething(0.65f, () => { enemyHealth.TakeDamage(attackDamage); });
+
+				}
+			}
+		}
+
+		attackId++;
+	}
 
     // 用于在编辑器中可视化攻击范围
     void OnDrawGizmosSelected()

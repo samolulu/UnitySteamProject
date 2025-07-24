@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         follower = GetComponent<NPCFollow>();
         enemyHealth = GetComponent<EnemyHealth>();
-        lastAttackTime = -attackCooldown;
+        lastAttackTime = Time.time + Random.Range(0.0f, 0.5f*attackCooldown);
     }
 
 	void Update()
@@ -57,7 +57,7 @@ public class EnemyAI : MonoBehaviour
 					isChasing = false;
 					isAttacking = false;
 					isIdling = true;
-					idleTime = 3.0f;
+					idleTime = Random.Range(3.0f, 12.0f);
 					StopMoving();
 				}
 
@@ -68,7 +68,11 @@ public class EnemyAI : MonoBehaviour
 				if (isIdling)
 				{
 					idleTime -= Time.deltaTime;
-					if (idleTime <= 0) isIdling = false;
+					if (idleTime <= 0)
+					{
+						isIdling = false;
+						animator.SetFloat("Speed", 0);
+					}
 				}
 				else
 				{
@@ -89,6 +93,7 @@ public class EnemyAI : MonoBehaviour
 		{
 			//animator.SetBool("IsChasing", isChasing);
 			//animator.SetBool("IsAttacking", isAttacking);
+			if (isIdling) animator.SetFloat("Speed", Random.Range(-1f, -0.4f));
 			if (isAttacking) animator.SetTrigger("Attack");
 		}
  
@@ -128,7 +133,7 @@ public class EnemyAI : MonoBehaviour
 		if (playerHealth != null)
 		{
 			// 敌人攻击力
-			this.DelayDoSomething(0.3f, () => { playerHealth.TakeDamage(5); });
+			this.DelayDoSomething(0.65f, () => { playerHealth.TakeDamage(5); });
         }
     }
 

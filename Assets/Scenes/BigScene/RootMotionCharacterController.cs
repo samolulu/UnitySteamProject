@@ -9,6 +9,7 @@ public class RootMotionCharacterController : MonoBehaviour
 	[SerializeField] private float maxSpeed = 1.0f;
 	[SerializeField] private float turnSpeed = 180.0f;
 
+	private Transform tran_camera;
 	private Animator animator;
 	private float currentSpeed = 0f;
 	private float currentSpeed_H = 0f;
@@ -18,6 +19,7 @@ public class RootMotionCharacterController : MonoBehaviour
 
 	void Start()
 	{
+		tran_camera = Camera.main.transform;
 		animator = GetComponent<Animator>();
 		if (animator)
 		{
@@ -49,9 +51,14 @@ public class RootMotionCharacterController : MonoBehaviour
 		animator.SetFloat(speedHParamName, currentSpeed_H);
 
 		// 仅在非低速前进且有水平输入时允许旋转
-		if ( Mathf.Abs(horizontalInput) > 0.1f && currentSpeed > 0.1f)
+		//if ( Mathf.Abs(horizontalInput) > 0.1f && currentSpeed > 0.1f)
+		if (currentSpeed > 0.0f) //向前移动过程中自动转向镜头前方
 		{
-			transform.Rotate(0, horizontalInput * turnSpeed * Time.deltaTime, 0);
+			Vector3 crossProduct = Vector3.Cross(transform.forward, tran_camera.forward );
+
+			// 判断目标向量是否在参考向量的右侧
+			//bool isOnRight = crossProduct.y > 0;
+			transform.Rotate(0, crossProduct.y * turnSpeed * Time.deltaTime, 0);
 		}
  
 	}
@@ -59,7 +66,7 @@ public class RootMotionCharacterController : MonoBehaviour
 	// 精确控制Root Motion应用
 	void OnAnimatorMove()
 	{
-		if (animator && (isMoving || isMoving_H))
+		if (animator && (currentSpeed != 0.0f || currentSpeed_H != 0.0f))
 		{
 			// 仅应用XZ平面的位移，忽略Y轴和旋转
 			Vector3 positionDelta = animator.deltaPosition;

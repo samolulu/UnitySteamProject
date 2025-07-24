@@ -27,8 +27,9 @@ public class FormationSystem : MonoBehaviour
 
     void Update()
     {
+		if (playerAnimator == null) return;
         // 判断主角是否在移动（通过速度参数）
-        isPlayerMoving = Math.Abs(playerAnimator.GetFloat(playerSpeedParam)) > 0.02f;
+		isPlayerMoving = Math.Abs(playerAnimator.GetFloat(playerSpeedParam)) > 0.02f;
         
         if(Time.frameCount % 5 == 0)UpdateFormationPositions();
         SyncNPCStates();
@@ -96,17 +97,23 @@ public class FormationSystem : MonoBehaviour
     {
         if (player == null || npcs.Count == 0) return;
 
-        for (int i = 0; i < npcs.Count; i++)
+        for (int i = npcs.Count-1; i >=0 ; i--)
         {
+			var npc = npcs[i];
+			if (npc == null)
+			{
+				npcs.Remove(npc);
+				continue;
+			}
             Vector3 relativePos = formationPositions[i];
             Vector3 targetPos = GetFormationWorldPos(relativePos);
-            npcs[i].SetTargetPosition(targetPos);
+            npc.SetTargetPosition(targetPos);
 
             // 同步主角速度参数
-            if (npcs[i].animator != null && playerAnimator != null)
+            if (npc.animator != null && playerAnimator != null)
             {
                 float speed = playerAnimator.GetFloat(playerSpeedParam);
-                npcs[i].animator.SetFloat(playerSpeedParam, speed);
+                npc.animator.SetFloat(playerSpeedParam, speed);
             }
         }
     }

@@ -105,6 +105,7 @@ public class FormationSystem : MonoBehaviour
 				npcs.Remove(npc);
 				continue;
 			}
+			//if(npc.ai.HasTarget() == false) continue;
             Vector3 relativePos = formationPositions[i];
             Vector3 targetPos = GetFormationWorldPos(relativePos);
             npc.SetTargetPosition(targetPos);

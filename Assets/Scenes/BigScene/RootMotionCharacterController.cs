@@ -63,6 +63,11 @@ public class RootMotionCharacterController : MonoBehaviour
  
 	}
 
+	public void SetMovementSpeed(float speed)
+	{
+		animator.SetFloat(speedParamName, speed);
+	}
+
 	// 精确控制Root Motion应用
 	void OnAnimatorMove()
 	{

@@ -7,6 +7,7 @@ public class NPCFollow : MonoBehaviour
     private float stoppingDistance = 1.0f;
     private float rotationSpeed = 10.0f;
     [SerializeField]public Animator animator;
+	public EnemyAI ai;
     private bool isPlayerMoving;
 	
     // 延迟参数（可在Inspector调整范围）
@@ -38,6 +39,7 @@ public class NPCFollow : MonoBehaviour
 	{
 		if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
 		animator = GetComponent<Animator>();
+		ai = GetComponent<EnemyAI>();
 
 
 		// 设置Animator Culling为Complete（不可见时完全停止更新）

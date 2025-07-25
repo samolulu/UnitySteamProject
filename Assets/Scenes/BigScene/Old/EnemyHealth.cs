@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : MonoBehaviour,IDamageable
 {
     [Header("敌人属性")]
     public int maxHealth = 100;
@@ -18,7 +18,7 @@ public class EnemyHealth : MonoBehaviour
     public Slider healthSlider;
     public GameObject healthBarUI;
 
-    public int currentHealth;
+    public int currentHealth  { get; set; }
     private bool isInvulnerable = false;
     private Renderer enemyRenderer;
     private Material originalMaterial;

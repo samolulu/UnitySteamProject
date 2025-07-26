@@ -1,280 +1,386 @@
 using UnityEngine;
-using System.Collections;
 using System;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Threading;
+using System.Collections.Concurrent;
+using System.Threading.Tasks;
+using System.Diagnostics; // 新增引用
+
+// 主线程调度器（确保UI操作在主线程执行）
+public class MainThreadDispatcher : MonoBehaviour
+{
+    private static MainThreadDispatcher _instance;
+    private static readonly ConcurrentQueue<Action> _actionQueue = new ConcurrentQueue<Action>();
+    private static int _mainThreadId;
+
+	public static MainThreadDispatcher Instance
+		{
+			get
+			{
+				// 先查找场景中是否已存在实例
+				if (_instance == null)
+				{
+					_instance = FindObjectOfType<MainThreadDispatcher>();
+					
+					// 如果场景中没有，创建新的GameObject
+					if (_instance == null)
+					{
+						GameObject obj = new GameObject("MainThreadDispatcher");
+						_instance = obj.AddComponent<MainThreadDispatcher>();
+						
+						// 仅在运行时设置DontDestroyOnLoad
+						if (Application.isPlaying)
+							DontDestroyOnLoad(obj);
+						
+						_mainThreadId = Thread.CurrentThread.ManagedThreadId;
+					}
+					else
+					{
+						// 如果找到实例，初始化主线程ID（如果尚未初始化）
+						if (_mainThreadId == 0)
+							_mainThreadId = Thread.CurrentThread.ManagedThreadId;
+					}
+				}
+				return _instance;
+			}
+		}
+
+    public bool IsMainThread => Thread.CurrentThread.ManagedThreadId == _mainThreadId;
+
+    private void Update()
+    {
+        // 每帧处理主线程任务队列
+        while (_actionQueue.TryDequeue(out Action action))
+        {
+            action?.Invoke();
+        }
+    }
+
+    // 在主线程执行Action（异步）
+    public Task ExecuteOnMainThreadAsync(Action action)
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        if (IsMainThread)
+        {
+            action?.Invoke();
+            tcs.SetResult(true);
+        }
+        else
+        {
+            _actionQueue.Enqueue(() =>
+            {
+                try
+                {
+                    action?.Invoke();
+                    tcs.SetResult(true);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+        }
+        return tcs.Task;
+    }
+
+    // 在主线程执行Func（异步，带返回值）
+    public Task<T> ExecuteOnMainThreadAsync<T>(Func<T> func)
+    {
+        var tcs = new TaskCompletionSource<T>();
+        if (IsMainThread)
+        {
+            try
+            {
+                tcs.SetResult(func());
+            }
+            catch (Exception ex)
+            {
+                tcs.SetException(ex);
+            }
+        }
+        else
+        {
+            _actionQueue.Enqueue(() =>
+            {
+                try
+                {
+                    tcs.SetResult(func());
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+        }
+        return tcs.Task;
+    }
+}
 
 
-[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+// 文件夹选择对话框结构体（与Windows API严格对齐）
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
 public class OpenDialogDir
 {
 	public IntPtr hwndOwner = IntPtr.Zero;
 	public IntPtr pidlRoot = IntPtr.Zero;
-	public String pszDisplayName = null;
-	public String lpszTitle = null;
-	public UInt32 ulFlags = 0;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string pszDisplayName = null;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpszTitle = null;
+	public uint ulFlags = 0;
 	public IntPtr lpfn = IntPtr.Zero;
 	public IntPtr lParam = IntPtr.Zero;
 	public int iImage = 0;
+	[MarshalAs(UnmanagedType.LPWStr)]
 	public string initialDir = null;
 
 
-
 	/// <summary>
-	/// 打开win路径选择窗口
+	/// 打开文件夹选择窗口（确保在主线程调用）
 	/// </summary>
-	/// <param name="title"></param>
-	/// <param name="defaultPath"></param>
-	/// <returns></returns>
-	public static string OpenWinDialogToGetFolder(string title = "Select Path",  string defaultPath = null)
+	public static async Task<string> OpenWinDialogToGetFolderAsync(string title = "选择路径", string defaultPath = null)
 	{
-		try
+		return await MainThreadDispatcher.Instance.ExecuteOnMainThreadAsync(() =>
 		{
-			OpenDialogDir ofn2 = new OpenDialogDir();
-			ofn2.pszDisplayName = new string(new char[2048]); // 存放目录路径缓冲区  
-			ofn2.lpszTitle = title; // 标题  
-			ofn2.initialDir  = defaultPath; 
-			ofn2.ulFlags =  0x00001000 | 0x00000800 | 0x00000040 | 0x00000002 | 0x00000001;  //https://learn.microsoft.com/zh-cn/windows/win32/api/shlobj_core/ns-shlobj_core-browseinfoa
-			IntPtr pidlPtr = OpenFileDialog.SHBrowseForFolder(ofn2);
-
-			char[] charArray = new char[2048];
-
-			for (int i = 0; i < 2048; i++)
+			try
 			{
-				charArray[i] = '\0';
+				var ofn2 = new OpenDialogDir();
+				ofn2.pszDisplayName = new string('\0', 2048); // 固定缓冲区
+				ofn2.lpszTitle = title;
+				ofn2.initialDir = defaultPath;
+				ofn2.ulFlags = 0x00001000 | 0x00000800 | 0x00000040 | 0x00000002 | 0x00000001;
+
+				IntPtr pidlPtr = OpenFileDialog.SHBrowseForFolder(ofn2);
+				if (pidlPtr == IntPtr.Zero) return string.Empty;
+
+				char[] charArray = new char[2048];
+				Array.Fill(charArray, '\0');
+				if (OpenFileDialog.SHGetPathFromIDList(pidlPtr, charArray))
+				{
+					return new string(charArray).TrimEnd('\0');
+				}
 			}
-
-			OpenFileDialog.SHGetPathFromIDList(pidlPtr, charArray);
-			string res = new string(charArray);
-			res = res.Substring(0, res.IndexOf('\0'));
-			return res;
-		}
-		catch (Exception e)
-		{
-			Debug.LogError(e);
-		}
-
-		return string.Empty; 
-
+			catch (Exception e)
+			{
+				UnityEngine.Debug.LogError($"文件夹选择失败: {e.Message}");
+			}
+			return string.Empty;
+		});
 	}
 
 	/// <summary>
-	/// 打开windows文件夹
+	/// 打开Windows文件夹（支持选中文件）
 	/// </summary>
-	/// <param name="path"></param>
 	public static void OpenWinFolder(string path, string selectFile = null)
 	{
-		if(!FileUtil.IsExistsDirectory(path)) 
+		if (!Directory.Exists(path))
 		{
-			Debug.Log($"文件夹不存在 {path}");
+			UnityEngine.Debug.LogError($"文件夹不存在: {path}");
 			return;
 		}
-		//OpenFileDialog.ShellExecute(IntPtr.Zero, "open", path, "", "", 1);
-		
 
 		try
 		{
-			if(selectFile == null)
+			if (selectFile == null)
 			{
-				System.Diagnostics.Process.Start(path);
+				// 直接使用System.Diagnostics.Process
+				Process.Start(new ProcessStartInfo(path) { UseShellExecute = true });
 			}
 			else
 			{
-				var target =  Path.Combine(path, selectFile);
-				// 检查路径是否存在
+				string target = Path.Combine(path, selectFile);
 				if (Directory.Exists(target) || File.Exists(target))
 				{
-					// 启动资源管理器并选中指定的文件或文件夹
-					System.Diagnostics.Process.Start("explorer.exe", $"/e,/select,\"{target}\"");
+					// 直接使用System.Diagnostics.Process
+					Process.Start(new ProcessStartInfo("explorer.exe", $"/e,/select,\"{target}\"") { UseShellExecute = true });
 				}
 				else
 				{
-					Debug.Log("指定的路径不存在。");
+					UnityEngine.Debug.LogError($"目标文件不存在: {target}");
 				}
 			}
-
 		}
 		catch (Exception ex)
 		{
-			Debug.Log($"发生错误: {ex.Message}");
-		}       
-		
-		
+			UnityEngine.Debug.LogError($"打开文件夹失败: {ex.Message}");
+		}
 	}
-
 }
 
-[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-public class FileDialog
+// 保存文件对话框结构体（与Windows OPENFILENAME严格对齐，无继承）
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public class SaveFileDialogStruct
 {
-	public int structSize = 0;
-	public IntPtr dlgOwner = IntPtr.Zero;
-	public IntPtr instance = IntPtr.Zero;
-	public String filter = null;
-	public String customFilter = null;
-	public int maxCustFilter = 0;
-	public int filterIndex = 0;
-	public String file = null;
-	public int maxFile = 0;
-	public String fileTitle = null;
-	public int maxFileTitle = 0;
-	public String initialDir = null;
-	public String title = null;
-	public int flags = 0;
-	public short fileOffset = 0;
-	public short fileExtension = 0;
-	public String defExt = null;
-	public IntPtr custData = IntPtr.Zero;
-	public IntPtr hook = IntPtr.Zero;
-	public String templateName = null;
-	public IntPtr reservedPtr = IntPtr.Zero;
-	public int reservedInt = 0;
-	public int flagsEx = 0;
-	//public String FileName = null;
+	public int lStructSize;
+	public IntPtr hwndOwner;
+	public IntPtr hInstance;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFilter;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrCustomFilter;
+	public int nMaxCustFilter;
+	public int nFilterIndex;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFile; // 文件名缓冲区
+	public int nMaxFile; // 缓冲区最大长度
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFileTitle;
+	public int nMaxFileTitle;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrInitialDir;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrTitle;
+	public int Flags;
+	public short nFileOffset;
+	public short nFileExtension;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrDefExt;
+	public IntPtr lCustData;
+	public IntPtr lpfnHook;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpTemplateName;
+	public IntPtr lpReserved;
+	public int dwReserved;
+	public int FlagsEx;
+}
 
+// 打开文件对话框结构体（与Windows OPENFILENAME严格对齐，无继承）
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+public class OpenFileDialogStruct
+{
+	public int lStructSize;
+	public IntPtr hwndOwner;
+	public IntPtr hInstance;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFilter;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrCustomFilter;
+	public int nMaxCustFilter;
+	public int nFilterIndex;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFile; // 文件名缓冲区
+	public int nMaxFile; // 缓冲区最大长度
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrFileTitle;
+	public int nMaxFileTitle;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrInitialDir;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrTitle;
+	public int Flags;
+	public short nFileOffset;
+	public short nFileExtension;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpstrDefExt;
+	public IntPtr lCustData;
+	public IntPtr lpfnHook;
+	[MarshalAs(UnmanagedType.LPWStr)]
+	public string lpTemplateName;
+	public IntPtr lpReserved;
+	public int dwReserved;
+	public int FlagsEx;
+}
 
-	public static string OpenFileDialogToSave(string fileName, string filter, string title, string defExt)
+public static class FileDialog
+{
+	/// <summary>
+	/// 打开保存文件对话框（异步，自动切换主线程）
+	/// </summary>
+	public static async Task<string> OpenFileDialogToSaveAsync(string fileName, string filter, string title, string defExt)
 	{
-
-		SaveFileDlg sfn = new SaveFileDlg();
-		sfn.structSize = Marshal.SizeOf(sfn);
-		// sfn.filter = "文件(*.xls)\0*.xls\0";
-		//sfn.filter = "图片文件(*.jpg;*.png)\0*.jpg;*.png\0";
-		//sfn.filter = "地图文件(*.mData)\0*.mData\0";
-		//
-		//sfn.title = "保存";
-		sfn.filter = filter;
-
-		sfn.file = new string(new char[1024]);
-		sfn.maxFile = sfn.file.Length;
-
-		sfn.fileTitle = new string(new char[256]);
-
-
-		sfn.maxFileTitle = sfn.fileTitle.Length;
-		// sfn.initialDir = Application.dataPath;
-		//sfn.initialDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-		
-		sfn.initialDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		sfn.file = fileName;
-		sfn.title = title;
-		//sfn.defExt = "xls";
-		sfn.defExt = defExt;
-
-		sfn.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;
-		sfn.dlgOwner = LocalDialog.GetForegroundWindow(); //这一步将文件选择窗口置顶。
-
-		try
+		return await MainThreadDispatcher.Instance.ExecuteOnMainThreadAsync(() =>
 		{
-			if (SaveFileDialog.GetSaveFileName(sfn))
+			try
 			{
+				var ofn = new SaveFileDialogStruct();
+				ofn.lStructSize = Marshal.SizeOf(ofn);
+				ofn.hwndOwner = OpenFileDialog.GetForegroundWindow(); // 置顶当前窗口
+				ofn.lpstrFilter = filter;
+				ofn.lpstrTitle = title;
+				ofn.lpstrDefExt = defExt;
+				ofn.lpstrInitialDir = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
-				return sfn.file;
+				// 初始化文件名缓冲区（固定1024字符，避免长度异常）
+				char[] fileBuffer = new char[1024];
+				Array.Fill(fileBuffer, '\0');
+				if (!string.IsNullOrEmpty(fileName))
+				{
+					Array.Copy(fileName.ToCharArray(), fileBuffer, Math.Min(fileName.Length, 1023));
+				}
+				ofn.lpstrFile = new string(fileBuffer);
+				ofn.nMaxFile = fileBuffer.Length;
+
+				// 设置对话框标志（确保路径存在、不改变当前目录）
+				ofn.Flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;
+
+				if (OpenFileDialog.GetSaveFileName(ofn))
+				{
+					return ofn.lpstrFile.TrimEnd('\0'); // 去除空字符
+				}
 			}
-		}
-		catch (Exception e)
-		{
-
-			Debug.LogError($" e.Message:{ e.Message}");
-		}
-		
-		return string.Empty;
+			catch (Exception e)
+			{
+				UnityEngine.Debug.LogError($"保存对话框异常: {e.Message}");
+			}
+			return string.Empty;
+		});
 	}
 
-
-	public static string OpenFile(string filter, string title, string defExt)
+	/// <summary>
+	/// 打开文件选择对话框（异步，自动切换主线程）
+	/// </summary>
+	public static async Task<string> OpenFileAsync(string filter, string title, string defExt)
 	{
-
-		OpenFileDlg sfn = new OpenFileDlg();
-		sfn.structSize = Marshal.SizeOf(sfn);
-		//sfn.filter = "文件(*.xls)\0*.xls\0";
-		//sfn.filter = "地图文件(*.mData)\0*.mData\0";
-		// sfn.filter = "exe files\0*.exe\0All Files\0*.*\0\0";
-		//sfn.filter = "*.png\0*.png\0*.jpg\0*.jpg*\0\0";
-		//// sfn.title = "打开地图文件";
-		// sfn.defExt = "*.mData";
-		sfn.filter = filter;
-		sfn.file = new string(new char[1024]);
-		sfn.maxFile = sfn.file.Length;
-		// sfn.file = name;
-		sfn.fileTitle = new string(new char[256]);
-		sfn.maxFileTitle = sfn.fileTitle.Length;
-		// sfn.initialDir = Application.dataPath;
-		//sfn.initialDir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-		sfn.initialDir = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
-		// sfn.title = "打开地图文件";
-
-		
-
-		sfn.title = title;
-		sfn.defExt = defExt;
-		sfn.flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;
-		// sfn.defExt = "mData";
-		sfn.dlgOwner = LocalDialog.GetForegroundWindow(); //这一步将文件选择窗口置顶。
-		try
+		return await MainThreadDispatcher.Instance.ExecuteOnMainThreadAsync(() =>
 		{
-			if (OpenFileDialog.GetOpenFileName(sfn))
+			try
 			{
-				return sfn.file;
+				var ofn = new OpenFileDialogStruct();
+				ofn.lStructSize = Marshal.SizeOf(ofn);
+				ofn.hwndOwner = OpenFileDialog.GetForegroundWindow();
+				ofn.lpstrFilter = filter;
+				ofn.lpstrTitle = title;
+				ofn.lpstrDefExt = defExt;
+				ofn.lpstrInitialDir = Environment.GetFolderPath(Environment.SpecialFolder.MyComputer);
+
+				// 初始化缓冲区
+				ofn.lpstrFile = new string('\0', 1024);
+				ofn.nMaxFile = 1024;
+				ofn.lpstrFileTitle = new string('\0', 256);
+				ofn.nMaxFileTitle = 256;
+
+				ofn.Flags = 0x00080000 | 0x00001000 | 0x00000800 | 0x00000200 | 0x00000008;
+
+				if (OpenFileDialog.GetOpenFileName(ofn))
+				{
+					return ofn.lpstrFile.TrimEnd('\0');
+				}
 			}
-		}
-		catch (Exception e)
-		{
-
-			Debug.LogError($" e.Message:{ e.Message}");
-		}
-		
-		return string.Empty;
+			catch (Exception e)
+			{
+				UnityEngine.Debug.LogError($"文件选择失败: {e.Message}");
+			}
+			return string.Empty;
+		});
 	}
-
 }
 
-[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-public class OpenFileDlg : FileDialog
+internal static class OpenFileDialog
 {
+	// 移除ThrowOnUnmappableChar，避免字符映射异常
+	[DllImport("Comdlg32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+	public static extern bool GetOpenFileName([In, Out] OpenFileDialogStruct ofn);
 
-}
-[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-public class SaveFileDlg : FileDialog
-{
+	[DllImport("Comdlg32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+	public static extern bool GetSaveFileName([In, Out] SaveFileDialogStruct ofn);
 
-
-}
-
-public class OpenFileDialog
-{
-
-	[DllImport("Comdlg32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
-	public static extern bool GetOpenFileName([In, Out] OpenFileDlg ofd); //声明该函数。
-
-	[DllImport("Comdlg32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
-	private static extern bool GetSaveFileName([In, Out] OpenFileName ofn); 
-
-	//窗口置顶
 	[DllImport("user32.dll")]
 	public static extern IntPtr GetForegroundWindow();
 
-	[DllImport("shell32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
+	[DllImport("shell32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
 	public static extern IntPtr SHBrowseForFolder([In, Out] OpenDialogDir ofn);
 
-	[DllImport("shell32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
-	public static extern bool SHGetPathFromIDList([In] IntPtr pidl, [In, Out] char[] fileName);
-
-	[DllImport("shell32.dll", CharSet=CharSet.Unicode)]
-	public static extern int ShellExecute(IntPtr hwnd, string lpszOp, string lpszFile, string lpszParams, string lpszDir, int FsShowCmd);
-
+	[DllImport("shell32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+	public static extern bool SHGetPathFromIDList([In] IntPtr pidl, [Out] char[] fileName);
 }
-
-public class SaveFileDialog
-{
-
-	[DllImport("Comdlg32.dll", SetLastError = true, ThrowOnUnmappableChar = true, CharSet = CharSet.Auto)]
-	public static extern bool GetSaveFileName([In, Out] SaveFileDlg ofd); //声明该函数。
-
-	//窗口置顶
-	[DllImport("user32.dll")]
-	public static extern IntPtr GetForegroundWindow();
-}
-
-
-

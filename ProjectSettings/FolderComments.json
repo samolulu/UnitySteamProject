@@ -649,6 +649,71 @@
             },
             "createdTimeStamp": 1752228663977,
             "modifiedTimeStamp": 1752228699201
+        },
+        {
+            "guid": "0b9cf3c1e9d42c94d9651d00e9949b52",
+            "title": "临时资源",
+            "comment": "这里主要是DEMO临时使用的一些从商店直接下载的资源，可能存在版权问题，且风格不一定符合游戏的。\n！进入正式版本后会提炼出有用的资源到GameRes去，然后清理掉这些资源！",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753666827985,
+            "modifiedTimeStamp": 1753668482916
+        },
+        {
+            "guid": "4aba4b93e712a51418c811b97f954715",
+            "title": "Demo大场景相关资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668164046,
+            "modifiedTimeStamp": 1753668302068
+        },
+        {
+            "guid": "942163c9cb2aba44c85fbaee1d11f853",
+            "title": "一些测试人物动作",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668217925,
+            "modifiedTimeStamp": 1753668217925
+        },
+        {
+            "guid": "be3612b69144d2544b3aae9706572a45",
+            "title": "一个骑士模型资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668237205,
+            "modifiedTimeStamp": 1753668237205
+        },
+        {
+            "guid": "1ef8a48ad2cb5483295cf5fb227124ea",
+            "title": "URP官方地形Demo场景",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668264446,
+            "modifiedTimeStamp": 1753668264446
         }
     ]
 }

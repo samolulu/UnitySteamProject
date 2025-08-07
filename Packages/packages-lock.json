@@ -1,25 +1,22 @@
 {
   "dependencies": {
     "com.cysharp.csprojmodifier": {
-      "version": "https://github.com/Cysharp/CsprojModifier.git?path=src/CsprojModifier/Assets/CsprojModifier",
+      "version": "file:com.cysharp.csprojmodifier@e82080dac6",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "e82080dac67f22fa0ef0b7c0aceadda92df76ec3"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.cysharp.zlogger": {
-      "version": "https://github.com/Cysharp/ZLogger.git?path=src/ZLogger.Unity/Assets/ZLogger.Unity",
+      "version": "file:com.cysharp.zlogger@d449524297",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "d44952429779c79eb0fdcc675a1224003bbf7172"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.ta.foldercommenttool": {
-      "version": "https://github.com/fenglyu1314/FolderCommentTool.git#upm",
+      "version": "file:com.ta.foldercommenttool@23da8dccb5",
       "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "23da8dccb5603e916d99371d02ca9c61a3769a31"
+      "source": "embedded",
+      "dependencies": {}
     },
     "com.unity.ai.navigation": {
       "version": "1.1.7",

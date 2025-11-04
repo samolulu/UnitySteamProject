@@ -804,6 +804,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2684541283977311898}
+    - targetCorrespondingSourceObject: {fileID: 3970771431872329556, guid: a51c6ceda85ce5d49974e5cef5f7060e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5044217010397272589}
   m_SourcePrefab: {fileID: 100100000, guid: a51c6ceda85ce5d49974e5cef5f7060e, type: 3}
 --- !u!4 &3933081818953487771 stripped
 Transform:
@@ -833,6 +837,18 @@ MonoBehaviour:
   sampleRadius: 0
   terrainLayer2SurfaceType: 010000000100000001000000060000000600000002000000000000000000000006000000060000000000000000000000000000000300000003000000030000000300000004000000040000000200000002000000020000000200000002000000
   currentTerrainType: 7
+--- !u!114 &5044217010397272589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6843381054947582961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b539cfd7fb3a2640af1c70fb48fb3d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6980774507123891838 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 649398188409998043, guid: a51c6ceda85ce5d49974e5cef5f7060e,

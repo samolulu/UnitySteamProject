@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 2fa1eaf64ccdf2443ae744143e5ce662
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - hitEffectPrefab: {fileID: 1038094029470511728, guid: 6da9a9d8e37eac44cb63a58dc75d3d01,
+      type: 3}
+  - hitSound: {fileID: 8300000, guid: 962a1538680a7544ca9fb4c8a7d4cfe3, type: 3}
+  - hitMaterial: {instanceID: 0}
+  - healthSlider: {instanceID: 0}
+  - healthBarUI: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

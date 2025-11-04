@@ -51,15 +51,9 @@
         "temp/": true,
         "Temp/": true
     },
-
-    // ... [existing settings]
     "files.associations": {
         "*.shader": "shaderlab",
-        "*.hlsl": "shaderlab",
-        // ... [other extensions]
+        "*.hlsl": "shaderlab"
     },
-
-    "dotnet.defaultSolution": "jsrh.sln"
+    "dotnet.defaultSolution": "UnitySteamProject.sln"
 }
-
- 

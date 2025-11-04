@@ -51,5 +51,15 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "UnitySteamProject.sln"
+
+    // ... [existing settings]
+    "files.associations": {
+        "*.shader": "shaderlab",
+        "*.hlsl": "shaderlab",
+        // ... [other extensions]
+    },
+
+    "dotnet.defaultSolution": "jsrh.sln"
 }
+
+ 

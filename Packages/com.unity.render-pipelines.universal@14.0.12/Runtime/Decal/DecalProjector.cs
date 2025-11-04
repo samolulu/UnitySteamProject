@@ -53,7 +53,7 @@ namespace UnityEngine.Rendering.Universal
         }
 
         [SerializeField]
-        private float m_DrawDistance = 1000.0f;
+        private float m_DrawDistance = 3000.0f;
         /// <summary>
         /// Distance from camera at which the Decal is not rendered anymore.
         /// </summary>

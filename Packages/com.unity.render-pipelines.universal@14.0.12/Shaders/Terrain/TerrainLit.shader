@@ -54,6 +54,13 @@ Shader "Universal Render Pipeline/Terrain/Lit"
         {
             Name "ForwardLit"
             Tags { "LightMode" = "UniversalForward" }
+            Stencil
+            {
+                Ref 8 // 标记值（与角色Shader对应）
+                Comp Always // 始终执行Stencil测试
+                Pass Replace // 通过测试时，用Ref值替换Stencil缓冲中的值
+            }
+
             HLSLPROGRAM
             #pragma target 3.0
 

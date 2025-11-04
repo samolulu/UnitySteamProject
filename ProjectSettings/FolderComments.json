@@ -3,7 +3,7 @@
         {
             "guid": "49ae1f2a85f7c1745a519bb44e70e3ef",
             "title": "美术资源",
-            "comment": "美术资源管理思路：先按功能划分，各功能下管理自己的各类资源。\t分布在各功能下的：模型、纹理贴图、材质、预制体、动画\r\n按类型管理的：字体、shader",
+            "comment": "美术资源管理思路：除特殊类型需统一管理,其他先按功能划分，各功能下管理自己的各类资源。\t分布在各功能下的：模型、纹理贴图、材质、预制体、动画\r\n需统一管理的类型：字体、shader",
             "titleColor": {
                 "r": 0.4000000059604645,
                 "g": 0.800000011920929,
@@ -11,7 +11,7 @@
                 "a": 1.0
             },
             "createdTimeStamp": 1751855969356,
-            "modifiedTimeStamp": 1751858438927
+            "modifiedTimeStamp": 1758161728448
         },
         {
             "guid": "d5e267c1abaceef47906f0695631cef0",
@@ -649,6 +649,188 @@
             },
             "createdTimeStamp": 1752228663977,
             "modifiedTimeStamp": 1752228699201
+        },
+        {
+            "guid": "0b9cf3c1e9d42c94d9651d00e9949b52",
+            "title": "临时资源",
+            "comment": "这里主要是DEMO临时使用的一些从商店直接下载的资源，可能存在版权问题，且风格不一定符合游戏的。\n！进入正式版本后会提炼出有用的资源到GameRes去，然后清理掉这些资源！",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753666827985,
+            "modifiedTimeStamp": 1753668482916
+        },
+        {
+            "guid": "4aba4b93e712a51418c811b97f954715",
+            "title": "Demo大场景相关资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668164046,
+            "modifiedTimeStamp": 1753668302068
+        },
+        {
+            "guid": "942163c9cb2aba44c85fbaee1d11f853",
+            "title": "一些测试人物动作",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668217925,
+            "modifiedTimeStamp": 1753668217925
+        },
+        {
+            "guid": "be3612b69144d2544b3aae9706572a45",
+            "title": "一个骑士模型资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668237205,
+            "modifiedTimeStamp": 1753668237205
+        },
+        {
+            "guid": "1ef8a48ad2cb5483295cf5fb227124ea",
+            "title": "URP官方地形Demo场景",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1753668264446,
+            "modifiedTimeStamp": 1753668264446
+        },
+        {
+            "guid": "60337214c2b56b14aa48956d21ac5d2d",
+            "title": "一些骑砍2提取的资源",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1756286060541,
+            "modifiedTimeStamp": 1756286060541
+        },
+        {
+            "guid": "d3504d9a346336844a1f802c1c58f1be",
+            "title": " shader编写工具",
+            "comment": "VSCode shader编写工具",
+            "titleColor": {
+                "r": 0.38273802399635317,
+                "g": 0.5471698045730591,
+                "b": 0.2348700612783432,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1756884647214,
+            "modifiedTimeStamp": 1756884677102
+        },
+        {
+            "guid": "7e0762263c81b6046ae5d0a77bb292fe",
+            "title": "雾气渲染",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1757067804005,
+            "modifiedTimeStamp": 1757067804005
+        },
+        {
+            "guid": "67184722b84df1544bf049173f464d74",
+            "title": "世界UI",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1757931518610,
+            "modifiedTimeStamp": 1757931518610
+        },
+        {
+            "guid": "df804e795dceabe499e30a49f8023d0c",
+            "title": "渲染管线拓展",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1757989930973,
+            "modifiedTimeStamp": 1757989930973
+        },
+        {
+            "guid": "6c4d177c792e61e44b20d6f148131f90",
+            "title": "人物音效",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1757990145596,
+            "modifiedTimeStamp": 1757990145596
+        },
+        {
+            "guid": "c54dac8a54a0126489475ae39909c1a3",
+            "title": "字体",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1758161439385,
+            "modifiedTimeStamp": 1758161439385
+        },
+        {
+            "guid": "cbf9067beca6e5347af436167e84c625",
+            "title": "shader统一管理",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1758161462591,
+            "modifiedTimeStamp": 1758161462591
+        },
+        {
+            "guid": "16922804c0290ed4db59fdbfa4d83266",
+            "title": "游戏时间模块",
+            "comment": "",
+            "titleColor": {
+                "r": 0.4000000059604645,
+                "g": 0.800000011920929,
+                "b": 1.0,
+                "a": 1.0
+            },
+            "createdTimeStamp": 1758161970561,
+            "modifiedTimeStamp": 1758161970561
         }
     ]
 }

@@ -251,6 +251,8 @@ public static class FileUtil
 
 	}
 
+	public static void DeleteFileOrDirectory(string path) => DeleteDirectoryAndFiles(path);
+	
 	/// <summary>
 	/// 删除目录下的文件（所有层级）
 	/// </summary>

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
- 
+
 public static partial class Extensions
-{   
-   	/// <summary>
+{
+    /// <summary>
     /// 搜索子物体组件-GameObject版
     /// </summary>
     public static T? Get<T>(this GameObject go, string subnode) where T : Component
@@ -15,13 +15,13 @@ public static partial class Extensions
         if (go != null)
         {
             Transform sub = go.transform.Find(subnode);
-			if (sub == null)
-			{
-				Debug.LogError("Node not exist");
-				return null;
-			}
-			
-			return sub.GetComponent<T>();
+            if (sub == null)
+            {
+                Debug.LogError("Node not exist");
+                return null;
+            }
+
+            return sub.GetComponent<T>();
         }
         return null;
     }
@@ -34,13 +34,13 @@ public static partial class Extensions
         if (go != null)
         {
             Transform sub = go.Find(subnode);
-			if (sub == null)
-			{
-				Debug.LogError("Node not exist");
-				return null;
-			}
+            if (sub == null)
+            {
+                Debug.LogError("Node not exist");
+                return null;
+            }
 
-			return sub.GetComponent<T>();
+            return sub.GetComponent<T>();
         }
         return null;
     }
@@ -52,36 +52,36 @@ public static partial class Extensions
     {
         return go.transform.Get<T>(subnode);
     }
- 
-    /// <summary>
-	/// 获取或增加组件。
-	/// </summary>
-	/// <typeparam name="T">要获取或增加的组件。</typeparam>
-	/// <param name="gameObject">目标对象。</param>
-	/// <returns>获取或增加的组件。</returns>
-    public static T? GetOrAddComponent<T>(this Transform transform) where T : Component
-	{
-		if (transform == null) return null;
-		GameObject obj = transform.gameObject;
-		return obj.GetOrAddComponent<T>();
-	}
-	
-    /// <summary>
-	/// 获取或增加组件。
-	/// </summary>
-	/// <typeparam name="T">要获取或增加的组件。</typeparam>
-	/// <param name="gameObject">目标对象。</param>
-	/// <returns>获取或增加的组件。</returns>
-	public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
-	{
-		T component = gameObject.GetComponent<T>();
-		if (component == null)
-		{
-			component = gameObject.AddComponent<T>();
-		}
 
-		return component;
-	}
+    /// <summary>
+    /// 获取或增加组件。
+    /// </summary>
+    /// <typeparam name="T">要获取或增加的组件。</typeparam>
+    /// <param name="gameObject">目标对象。</param>
+    /// <returns>获取或增加的组件。</returns>
+    public static T? GetOrAddComponent<T>(this Transform transform) where T : Component
+    {
+        if (transform == null) return null;
+        GameObject obj = transform.gameObject;
+        return obj.GetOrAddComponent<T>();
+    }
+
+    /// <summary>
+    /// 获取或增加组件。
+    /// </summary>
+    /// <typeparam name="T">要获取或增加的组件。</typeparam>
+    /// <param name="gameObject">目标对象。</param>
+    /// <returns>获取或增加的组件。</returns>
+    public static T GetOrAddComponent<T>(this GameObject gameObject) where T : Component
+    {
+        T component = gameObject.GetComponent<T>();
+        if (component == null)
+        {
+            component = gameObject.AddComponent<T>();
+        }
+
+        return component;
+    }
 
     /// <summary>
     /// 获取 GameObject 是否在场景中。
@@ -93,39 +93,39 @@ public static partial class Extensions
     {
         return gameObject.scene.name != null;
     }
-	
-    private static readonly List<Transform> s_CachedTransforms = new List<Transform>();
-	
-    /// <summary>
-	/// 递归设置游戏对象的层次。
-	/// </summary>
-	/// <param name="gameObject"><see cref="GameObject" /> 对象。</param>
-	/// <param name="layer">目标层次的编号。</param>
-	public static void SetLayerRecursively(this GameObject gameObject, int layer)
-	{
-		gameObject.GetComponentsInChildren(true, s_CachedTransforms);
-		for (int i = 0; i < s_CachedTransforms.Count; i++)
-		{
-			s_CachedTransforms[i].gameObject.layer = layer;
-		}
 
-		s_CachedTransforms.Clear();
-	}
+    private static readonly List<Transform> s_CachedTransforms = new List<Transform>();
+
+    /// <summary>
+    /// 递归设置游戏对象的层次。
+    /// </summary>
+    /// <param name="gameObject"><see cref="GameObject" /> 对象。</param>
+    /// <param name="layer">目标层次的编号。</param>
+    public static void SetLayerRecursively(this GameObject gameObject, int layer)
+    {
+        gameObject.GetComponentsInChildren(true, s_CachedTransforms);
+        for (int i = 0; i < s_CachedTransforms.Count; i++)
+        {
+            s_CachedTransforms[i].gameObject.layer = layer;
+        }
+
+        s_CachedTransforms.Clear();
+    }
 
     public static void DoLocalMovePosition(this Transform transform)
-	{
-		transform.DOComplete();
-	}
+    {
+        transform.DOComplete();
+    }
 
 
     public static Tweener DoScaleYoyo(this Transform transform, float scale, float time, int loop = 1)
     {
-       return transform.DOScale(scale, time).SetLoops(loop, LoopType.Yoyo).SetEase(Ease.InCirc);
-    } 
+        return transform.DOScale(scale, time).SetLoops(loop, LoopType.Yoyo).SetEase(Ease.InCirc);
+    }
 
-    public static Coroutine DelayDoSomething(this MonoBehaviour monoBehaviour,float time, Action callback)
+    public static Coroutine DelayDoSomething(this MonoBehaviour monoBehaviour, float time, Action callback)
     {
-       return monoBehaviour.StartCoroutine(_DelayDoSomething(time, callback));
+        return monoBehaviour.StartCoroutine(_DelayDoSomething(time, callback));
     }
     public static IEnumerator _DelayDoSomething(float time, Action callback)
     {
@@ -133,15 +133,15 @@ public static partial class Extensions
         callback?.Invoke();
     }
 
-    
- 
+
+
     /// <summary>
     /// 循环查找Childs
     /// </summary>
     /// <param name="transform"></param>
     /// <param name="name"></param>
     /// <returns></returns>
-    public static List<Transform>  FindChildsByName(this Transform transform, string name)
+    public static List<Transform> FindChildsByName(this Transform transform, string name)
     {
         if (transform == null) return new();
 
@@ -161,12 +161,12 @@ public static partial class Extensions
     }
 
 
-    public static void RemoveAllChild(this Transform transform)
+    public static void RemoveAllChildren(this Transform transform)
     {
         if (transform == null) return;
-        transform.DestroyAllChild();
+        transform.DestroyAllChildren();
     }
-    public static void DestroyAllChild(this Transform transform, bool immediate = false)
+    public static void DestroyAllChildren(this Transform transform, bool immediate = false)
     {
         if (transform == null) return;
 
@@ -174,43 +174,43 @@ public static partial class Extensions
         if (childCount == 0) return;
 
         Transform? trans = null;
-        for (int i = childCount-1; i >= 0; --i)
+        for (int i = childCount - 1; i >= 0; --i)
         {
             trans = transform.GetChild(i);
             if (trans != null)
             {
-				if(immediate) GameObject.DestroyImmediate(trans.gameObject);
-				else GameObject.Destroy(trans.gameObject);
-				
+                if (immediate) GameObject.DestroyImmediate(trans.gameObject);
+                else GameObject.Destroy(trans.gameObject);
+
                 trans = null;
             }
         }
     }
 
-    public static void SetChildActive(this Transform trans,bool active)
+    public static void SetChildActive(this Transform trans, bool active)
     {
         if (trans == null) return;
 
         int childCount = trans.childCount;
         if (childCount > 0)
         {
-            for(int i = 0; i < childCount; ++i)
+            for (int i = 0; i < childCount; ++i)
             {
                 trans.GetChild(i).gameObject.SetActive(active);
             }
         }
     }
 
-    public static int  GetActiveChildCount(this Transform trans)
+    public static int GetActiveChildCount(this Transform trans)
     {
         if (trans == null) return 0;
         int activeCount = 0;
         int childCount = trans.childCount;
         if (childCount > 0)
         {
-            for(int i = 0; i < childCount; ++i)
+            for (int i = 0; i < childCount; ++i)
             {
-                if(trans.GetChild(i).gameObject.activeSelf) activeCount++;
+                if (trans.GetChild(i).gameObject.activeSelf) activeCount++;
             }
         }
         return activeCount;
@@ -218,11 +218,11 @@ public static partial class Extensions
 
     public static void SimplePool(this Transform trans, int count, Action<Transform, int> callback)
     {
-        if(trans.childCount == 0 )
+        if (trans.childCount == 0)
         {
             return;
         }
-        if(count == 0 )
+        if (count == 0)
         {
             trans.SetChildActive(false);
             return;
@@ -232,7 +232,7 @@ public static partial class Extensions
         for (int i = 0; i < count; ++i)
         {
             if (trans.childCount < i + 1)
-            {   
+            {
                 temp = Transform.Instantiate(item, trans, false);
             }
             else
@@ -250,14 +250,14 @@ public static partial class Extensions
             trans.GetChild(i).gameObject.SetActive(false);
         }
     }
-   
+
     public static void SimplePool_Add(this Transform trans, int count, int sibling, Action<Transform, int> callback)
     {
-        if(trans.childCount == 0 )
+        if (trans.childCount == 0)
         {
             return;
         }
-        if(count == 0 )
+        if (count == 0)
         {
             return;
         }
@@ -265,17 +265,17 @@ public static partial class Extensions
 
         for (int i = 0; i < count; ++i)
         {
-            Transform? temp = null; 
+            Transform? temp = null;
             for (int c = 1; c < trans.childCount; c++)
             {
                 var child = trans.GetChild(c);
-                if(child.gameObject.activeSelf == false) 
+                if (child.gameObject.activeSelf == false)
                 {
                     temp = child;
                     break;
                 }
             }
-            if(temp == null)temp = Transform.Instantiate(item, trans, false);
+            if (temp == null) temp = Transform.Instantiate(item, trans, false);
             temp.SetSiblingIndex(sibling);
             temp.gameObject.SetActive(true);
             callback?.Invoke(temp, i);
@@ -307,11 +307,11 @@ public static partial class Extensions
         }
         return objList;
     }
-    
-    public static IEnumerator SimplePoolYield(this Transform trans, int count, Action<Transform, int> callback,Func<IEnumerator> yieldFunc)
+
+    public static IEnumerator SimplePoolYield(this Transform trans, int count, Action<Transform, int> callback, Func<IEnumerator> yieldFunc)
     {
         trans.SetChildActive(false);
-        if(count == 0)
+        if (count == 0)
         {
             yield break;
         }
@@ -320,7 +320,7 @@ public static partial class Extensions
         for (int i = 0; i < count; ++i)
         {
             if (trans.childCount < i + 1)
-            {   
+            {
                 temp = Transform.Instantiate(item, trans, false);
             }
             else
@@ -335,7 +335,7 @@ public static partial class Extensions
             yield return yieldFunc;
         }
 
-        
+
     }
 
     /// <summary>
@@ -345,8 +345,8 @@ public static partial class Extensions
     /// <param name="grayState">是否置灰</param>
     public static void SetUIGray(this Transform trans, bool grayState)
     {
-		Material? mat_gray = null;// UIManager.Instance.uiGrayMat;
-        if(null == mat_gray)
+        Material? mat_gray = null;// UIManager.Instance.uiGrayMat;
+        if (null == mat_gray)
         {
             Debug.LogError("UI置灰失败，材质丢失！");
             return;
@@ -354,14 +354,54 @@ public static partial class Extensions
         var graphics = trans.GetComponentsInChildren<Graphic>(true);
         foreach (var graphic in graphics)
         {
-            if(grayState)
+            if (grayState)
             {
-                if(graphic.material == null || graphic.material.name == "Default UI Material") graphic.material = mat_gray;
-            }else{
-                if(graphic.material == mat_gray)graphic.material = graphic.defaultMaterial;
+                if (graphic.material == null || graphic.material.name == "Default UI Material") graphic.material = mat_gray;
             }
-            
+            else
+            {
+                if (graphic.material == mat_gray) graphic.material = graphic.defaultMaterial;
+            }
+
         }
     }
+ 
+    public static void ResetKeyframeTime(this AnimationCurve targetCurve, float[] times)
+    {
+        if (targetCurve == null || times == null || times.Length != targetCurve.keys.Length)
+            return;
+
+        // 获取当前关键帧数组
+        Keyframe[] keys = targetCurve.keys;
+
+        // 确保时间在有效范围内（可选）
+        for (int i = 0; i < keys.Length; i++)
+        {
+            keys[i] = new Keyframe(Mathf.Clamp(times[i], 0f, Mathf.Max(keys[keys.Length - 1].time, times[i])), keys[i].value,
+                                  keys[i].inTangent, keys[i].outTangent);
+        }
+
+        // 将修改后的关键帧重新赋值给曲线
+        targetCurve.keys = keys;
+    }
+    
+    public static void ResetKeyframeTime(this Gradient targetCurve, float[] times)
+    {
+        if (targetCurve == null || times == null || times.Length != targetCurve.colorKeys.Length)
+            return;
+
+        // 获取当前关键帧数组
+        GradientColorKey[] colorKeys = targetCurve.colorKeys;
+
+        // 确保时间在有效范围内（可选）
+        for (int i = 0; i < colorKeys.Length; i++)
+        {
+            colorKeys[i] = new GradientColorKey(colorKeys[i].color, Mathf.Clamp(times[i], 0f, Mathf.Max(colorKeys[colorKeys.Length - 1].time, times[i])));
+        }
+
+        // 将修改后的关键帧重新赋值给曲线
+        targetCurve.colorKeys = colorKeys;
+    }
+    
 
 }

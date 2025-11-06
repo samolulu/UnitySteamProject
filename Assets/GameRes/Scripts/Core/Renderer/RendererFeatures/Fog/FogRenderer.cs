@@ -131,7 +131,7 @@ namespace GapperGames
                 colorCopyDescriptor.depthBufferBits = (int)DepthBits.None;
                 RenderingUtils.ReAllocateIfNeeded(ref m_CopiedColor, colorCopyDescriptor, name: "_FullscreenPassColorCopy");
 
-                FogTexture = RTHandles.Alloc("tst", name: "tst");
+                FogTexture = FogTexture ?? RTHandles.Alloc("tst", name: "tst");
 
                 m_PassData ??= new PassData();
             }

@@ -25,12 +25,14 @@ public class TerrainTypeDetector : MonoBehaviour
 {
     public Terrain targetTerrain;
 
-    [Range(0, 5)]  [Tooltip("采样半径(1时相当于周围九宫格范围)")]
+    [Range(0, 5)]
+    [Tooltip("采样半径(1时相当于周围九宫格范围)")]
     public int sampleRadius = 1;   // 采样半径(1时相当于周围九宫格范围),单位像素,用于平滑地形类型
 
     /// <summary>
     /// 地形纹理图层到地表类型的映射关系; 水域通过其他方式判断(射线)
     /// </summary>
+    [SerializeField]
     public TerrainSurfaceType[] terrainLayer2SurfaceType = {
         TerrainSurfaceType.Grassland,
         TerrainSurfaceType.Grassland,

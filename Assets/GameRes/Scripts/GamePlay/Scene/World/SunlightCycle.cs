@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -12,7 +13,10 @@ public class SunlightCycle : MonoBehaviour
 
     [Tooltip("当前时间（0-1，0=午夜，0.5=中午，1=午夜）")]
     [Range(0f, 1f)]
-    public float currentTimeOfDay = 0.25f;
+    public float currentTimeOfDay = 0.25f; //用于光线表现的时间
+    private float timeOfDayTick = 0f; // 真实游戏世界时间
+    public int timeOfDaySteps = 10; // 分段数
+    public float speedOfStep = 5.0f; //段与段之间过渡提速
 
     // 日出、日落的时间点（0-1范围）
      [Header("日出、日落的时间点")]
@@ -88,6 +92,7 @@ public class SunlightCycle : MonoBehaviour
     [ContextMenu("刷新时间节点")]
     void ResetTimeNodes()
     {
+ 
         var newFrameTimes = new float[] { 0f, sunriseTime, 0.5f, sunsetTime, 1f };
         lightColorGradient.ResetKeyframeTime(newFrameTimes);
         skyColorGradient.ResetKeyframeTime(newFrameTimes);
@@ -133,10 +138,26 @@ public class SunlightCycle : MonoBehaviour
         if (autoUpdate)
         {
             // 更新时间（循环）
-            currentTimeOfDay += Time.deltaTime / dayDuration;
+            var delta = Time.deltaTime / dayDuration;
+            timeOfDayTick += delta;
+            if (timeOfDayTick >= 1f)
+            {
+                timeOfDayTick -= 1f;
+            }
+
+            // 限制时间变化步进，避免过快跳跃
+            var target = StepTimeOfDay(timeOfDayTick );
+            if (target < currentTimeOfDay && currentTimeOfDay < 1f) target = 1f; // 先完整跨过午夜点
+            
+            //用几倍的速度过渡到目标时间
+            if(target != currentTimeOfDay)
+            {
+                currentTimeOfDay += delta * speedOfStep;
+                currentTimeOfDay = Mathf.Min(currentTimeOfDay, target);
+            }
             if (currentTimeOfDay >= 1f)
             {
-                currentTimeOfDay -= 1f;
+                currentTimeOfDay = 0f;
             }
         }
 
@@ -217,10 +238,16 @@ public class SunlightCycle : MonoBehaviour
     // 可以通过代码设置特定时间
     public void SetTimeOfDay(float time)
     {
-        currentTimeOfDay = Mathf.Clamp01(time);
+        timeOfDayTick = Mathf.Clamp01(time);
+        currentTimeOfDay = StepTimeOfDay(timeOfDayTick );
         UpdateSunlight();
 
         UpdateAmbient();
+    }
+
+    float StepTimeOfDay(float time)
+    {
+        return Mathf.Floor(time * timeOfDaySteps) / timeOfDaySteps;
     }
 
     Light currentRenderSunSource;

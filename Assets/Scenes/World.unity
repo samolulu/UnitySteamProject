@@ -2748,6 +2748,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2029003896538598969, guid: 860dffd2e53ba4f43ac143b9f4d5c45c,
         type: 3}
+      propertyPath: dayDuration
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029003896538598969, guid: 860dffd2e53ba4f43ac143b9f4d5c45c,
+        type: 3}
+      propertyPath: timeOfDaySteps
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2029003896538598969, guid: 860dffd2e53ba4f43ac143b9f4d5c45c,
+        type: 3}
       propertyPath: currentTimeOfDay
       value: 1
       objectReference: {fileID: 0}
